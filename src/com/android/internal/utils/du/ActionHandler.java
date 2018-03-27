@@ -46,6 +46,7 @@ import android.media.ToneGenerator;
 import android.media.session.MediaSessionLegacyHelper;
 import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -81,6 +82,7 @@ import java.util.Set;
 
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.utils.du.Config.ActionConfig;
+import com.android.internal.util.gzosp.GzospUtils;
 
 public class ActionHandler {
     public static String TAG = ActionHandler.class.getSimpleName();
@@ -1126,8 +1128,23 @@ public class ActionHandler {
     */
 
     public static void startAssistantSoundSearch(Context context) {
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH");
-        context.startActivity(intent);
+        // Shazam 
+        if (GzospUtils.isPackageInstalled(context, "com.shazam.android") || GzospUtils.isPackageInstalled(context, "com.shazam.encore.android")) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setAction("com.shazam.android.intent.actions.START_TAGGING");
+            context.startActivity(intent);
+        // Soundhound
+        } else if (GzospUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier.freemium") || GzospUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier")) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setAction("com.soundhound.android.ID_NOW_EXTERNAL");
+            context.startActivity(intent);
+        // Google Search Music
+        } else if (GzospUtils.isPackageInstalled(context, "com.google.android.googlequicksearchbox")) {
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH");
+            context.startActivity(intent);
+        } else {
+            return;
+        }
     }
 }
