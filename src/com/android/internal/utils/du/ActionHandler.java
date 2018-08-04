@@ -82,7 +82,7 @@ import java.util.Set;
 
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.utils.du.Config.ActionConfig;
-import com.android.internal.util.gzosp.GzospUtils;
+import com.android.internal.util.bootleggers.BootlegUtils;
 
 public class ActionHandler {
     public static String TAG = ActionHandler.class.getSimpleName();
@@ -1129,17 +1129,17 @@ public class ActionHandler {
 
     public static void startAssistantSoundSearch(Context context) {
         // Shazam 
-        if (GzospUtils.isPackageInstalled(context, "com.shazam.android") || GzospUtils.isPackageInstalled(context, "com.shazam.encore.android")) {
+        if (BootlegUtils.isPackageInstalled(context, "com.shazam.android") || BootlegUtils.isPackageInstalled(context, "com.shazam.encore.android")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.setAction("com.shazam.android.intent.actions.START_TAGGING");
             context.startActivity(intent);
         // Soundhound
-        } else if (GzospUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier.freemium") || GzospUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier")) {
+        } else if (BootlegUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier.freemium") || BootlegUtils.isPackageInstalled(context, "com.melodis.midomiMusicIdentifier")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.setAction("com.soundhound.android.ID_NOW_EXTERNAL");
             context.startActivity(intent);
         // Google Search Music
-        } else if (GzospUtils.isPackageInstalled(context, "com.google.android.googlequicksearchbox")) {
+        } else if (BootlegUtils.isPackageInstalled(context, "com.google.android.googlequicksearchbox")) {
             Intent intent = new Intent(Intent.ACTION_MAIN);
             intent.setAction("com.google.android.googlequicksearchbox.MUSIC_SEARCH");
             context.startActivity(intent);
